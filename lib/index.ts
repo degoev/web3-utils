@@ -13,6 +13,7 @@ import { supportedChains, rpcUrlByChains, ChainIds } from "./configs/networks";
 import walletConfigs from "./configs/wallets";
 import hooks from "./hooks";
 import redux from "./redux";
+const { useWeb3Auth } = hooks;
 
 const web3 = {
   connectors: {
@@ -35,7 +36,7 @@ const web3 = {
     ChainIds,
     wallets: walletConfigs,
   },
-  hooks,
+  hooks: { useWeb3Auth },
   redux,
 };
 
