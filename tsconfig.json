@@ -2,6 +2,7 @@
   "compilerOptions": {
     "outDir": "build",
     "allowJs": true,
+    "checkJs": false,
     "target": "es5",
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
@@ -23,6 +24,6 @@
     "typeRoots": ["./node_modules/@types", "types"]
   },
   "types": ["jest", "@testing-library/jest-dom"],
-  "exclude": ["node_modules", "dist"],
-  "include": ["lib"]
+  "exclude": ["node_modules", "lib"],
+  "include": []
 }
