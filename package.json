@@ -4,7 +4,7 @@
   "description": "Web3 utils",
   "main": "lib/index.js",
   "files": [
-    "dist"
+    "lib"
   ],
   "engines": {
     "node": ">=10"
