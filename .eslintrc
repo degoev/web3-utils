@@ -1,0 +1,53 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb/hooks",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    // React
+    "react/react-in-jsx-scope": "off",
+    "react/display-name": "off",
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/no-array-index-key": "warn",
+
+    // Base
+    "comma-dangle": "off",
+    "quotes": ["off", "backtick"],
+    "semi": "off",
+    "no-empty-pattern": "off",
+    "no-unused-vars": "warn",
+    "no-param-reassign": "warn",
+    "array-callback-return": "off",
+    "indent": "off",
+    "multiline-ternary": "off",
+    "no-loss-of-precision": "off",
+
+    // TypeScript
+    "@typescript-eslint/no-var-requires": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

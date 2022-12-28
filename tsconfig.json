@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "allowJs": true,
+    "target": "es5",
+    "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types", "types"]
+  },
+  "types": ["jest", "@testing-library/jest-dom"],
+  "exclude": ["node_modules", "dist"],
+  "include": ["lib"]
+}
