@@ -11,6 +11,7 @@ import pkg from "./package.json";
 
 const config = {
   input: "lib/index.js",
+  inlineDynamicImports: true,
   output: [
     {
       dir: pkg.main,
