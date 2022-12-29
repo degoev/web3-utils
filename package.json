@@ -1,6 +1,6 @@
 {
   "name": "@degoev/web3-utils",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Web3 utils",
   "main": "lib/index.js",
   "files": [
