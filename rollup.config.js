@@ -14,7 +14,7 @@ const config = {
   inlineDynamicImports: true,
   output: [
     {
-      dir: pkg.main,
+      file: pkg.main,
       format: "cjs",
       exports: "named",
       sourcemap: true,
