@@ -2,17 +2,27 @@
   "name": "@degoev/web3-utils",
   "version": "1.0.7",
   "description": "Web3 utils",
-  "main": "lib/index.js",
+  "author": "degoev",
+  "license": "ISC",
   "type": "module",
+  "main": "dist/index.js",
   "files": [
-    "lib"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
   },
-  "scripts": {},
-  "author": "degoev",
-  "license": "ISC",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:quiet": "eslint --quiet . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint --fix . --ext .js,.jsx,.ts,.tsx",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check ."
+  },
   "dependencies": {
     "@rogwild/next-utils": "7.4.5",
     "@web3-react/core": "6.1.9",
@@ -21,7 +31,26 @@
     "eslint-plugin-react": "^7.30.1",
     "ethers": "^5.7.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/plugin-transform-runtime": "^7.18.10",
+    "@babel/preset-env": "^7.18.10",
+    "@babel/preset-react": "^7.18.6",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@types/react-redux": "^7.1.24",
+    "autoprefixer": "^10.4.8",
+    "babel-loader": "^8.2.5",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-next": "13.0.3",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-react": "^7.30.1",
+    "prettier": "^2.6.1",
+    "rollup": "^2.78.0",
+    "whatwg-fetch": "^3.6.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/degoev/web3-utils.git"
