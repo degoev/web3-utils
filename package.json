@@ -4,7 +4,6 @@
   "description": "Web3 utils",
   "author": "degoev",
   "license": "ISC",
-  "type": "module",
   "main": "dist/index.js",
   "files": [
     "dist"
