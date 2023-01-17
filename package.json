@@ -1,6 +1,6 @@
 {
   "name": "@degoev/web3-utils",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Web3 utils",
   "author": "degoev",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "prettier:check": "prettier --check ."
   },
   "dependencies": {
+    "@metamask/jazzicon": "^2.0.0",
     "@rogwild/next-utils": "7.4.5",
     "@web3-react/core": "6.1.9",
     "@web3-react/injected-connector": "6.0.7",
