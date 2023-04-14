@@ -8508,7 +8508,7 @@ var NullCoder = /*#__PURE__*/function (_Coder) {
   return NullCoder;
 }(Coder);
 
-var AddressZero$1 = "0x0000000000000000000000000000000000000000";
+var AddressZero = "0x0000000000000000000000000000000000000000";
 
 var NegativeOne$1 = /*#__PURE__*/BigNumber.from(-1);
 var Zero$1 = /*#__PURE__*/BigNumber.from(0);
@@ -8526,7 +8526,7 @@ var EtherSymbol = "\u039E"; // "\uD835\uDF63";
 
 var index$3 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  AddressZero: AddressZero$1,
+  AddressZero: AddressZero,
   NegativeOne: NegativeOne$1,
   Zero: Zero$1,
   One: One$1,
@@ -23312,7 +23312,7 @@ var Formatter = /*#__PURE__*/function () {
         return null;
       }
       var address = getAddress(hexDataSlice(value, 12));
-      return address === AddressZero$1 ? null : address;
+      return address === AddressZero ? null : address;
     }
   }, {
     key: "contractAddress",
@@ -34188,12 +34188,12 @@ var setupNetwork = function setupNetwork(provider, chainId) {
         chainId: hexChainId
       }] // chainId must be in hexadecimal numbers
     })["catch"](function (err) {
-      console.log("wallet_addEthereumChain");
+      console.log("wallet_switchEthereumChain catch 1", err);
       return provider.request({
         method: "wallet_addEthereumChain",
         params: [pureConfigs[chainId]]
       })["catch"](function (addError) {
-        console.error("wallet_addEthereumChain ", addError);
+        console.error("wallet_addEthereumChain catch 1", addError);
       });
     });
   } catch (error) {
@@ -34252,8 +34252,8 @@ var signMessage = function signMessage(_ref2) {
     message = _ref2.message,
     provider = _ref2.provider;
   var signer = provider.getSigner(account);
-  var hexMessage = utils$5.hexlify(utils$5.toUtf8Bytes(message));
-  return signer.signMessage(hexMessage);
+  utils$5.hexlify(utils$5.toUtf8Bytes(message));
+  return signer.signMessage(message);
 };
 var isMobile = typeof window === "undefined" ? false : window.innerWidth < 470;
 var signTypedMessage = /*#__PURE__*/function () {
@@ -34349,7 +34349,6 @@ var selectors = {
 };
 var actions = web3Slice.actions;
 
-var AddressZero = AddressZero$1;
 var useWeb3Auth$1 = function useWeb3Auth(_ref) {
   var useDispatch = _ref.useDispatch,
     useSelector = _ref.useSelector,
@@ -34362,8 +34361,7 @@ var useWeb3Auth$1 = function useWeb3Auth(_ref) {
     chainId = _useWeb3React.chainId,
     activate = _useWeb3React.activate,
     deactivate = _useWeb3React.deactivate,
-    _useWeb3React$account = _useWeb3React.account,
-    account = _useWeb3React$account === void 0 ? AddressZero : _useWeb3React$account,
+    account = _useWeb3React.account,
     provider = _useWeb3React.library;
   var logout = React.useCallback(function () {
     console.log("web3 logout");
@@ -34429,9 +34427,7 @@ var useWeb3Auth$1 = function useWeb3Auth(_ref) {
                             _context.next = 10;
                             return setupNetwork(_provider, reduxChainId, createNotification);
                           case 10:
-                            activate(connector, function (err) {
-                              if (err.name === "UnsupportedChainIdError") setupNetwork(_provider, reduxChainId, createNotification);
-                            })["catch"](function () {
+                            activate(connector)["catch"](function () {
                               return logout();
                             });
                             return _context.abrupt("return");
@@ -34533,7 +34529,7 @@ var useWeb3Auth$1 = function useWeb3Auth(_ref) {
   return {
     login: login,
     logout: logout,
-    account: account.toLowerCase(),
+    account: account === null || account === void 0 ? void 0 : account.toLowerCase(),
     provider: provider,
     chainId: chainId,
     showWeb3Login: loginModal.show,
@@ -34568,9 +34564,7 @@ var authTokensManager = {
   },
   _getAccountStorage: function _getAccountStorage(address) {
     var accountStorage = this._getStorage()[address] || {};
-    return {
-      jwt: accountStorage.jwt
-    };
+    return accountStorage;
   },
   _setToken: function _setToken(address, tokenKey, token) {
     var accountStorage = this._getAccountStorage(address.toLowerCase());
@@ -34578,7 +34572,7 @@ var authTokensManager = {
     this._setAccountStorage(address.toLowerCase(), accountStorage);
   },
   _getToken: function _getToken(address, tokenKey) {
-    return this._getAccountStorage(address.toLowerCase())[tokenKey];
+    return address && this._getAccountStorage(address.toLowerCase())[tokenKey];
   },
   getJwt: function getJwt(address) {
     if (!address) {
@@ -34593,7 +34587,19 @@ var authTokensManager = {
     if (!address) {
       address = this.getCurrentAccount();
     }
-    return this._setToken(address, "jwt", jwt);
+    return address && this._setToken(address, "jwt", jwt);
+  },
+  setSignatureData: function setSignatureData(address, signatureData) {
+    if (!address) {
+      address = this.getCurrentAccount();
+    }
+    return address && this._setToken(address, "signature", signatureData);
+  },
+  getSignatureData: function getSignatureData(address) {
+    if (!address) {
+      address = this.getCurrentAccount();
+    }
+    return this._getToken(address, "signature");
   },
   setCurrentAccount: function setCurrentAccount(address) {
     localStorage$1.setItem("currentWeb3Account", address.toLowerCase());
@@ -34605,8 +34611,8 @@ var authTokensManager = {
     if (!address) {
       address = this.getCurrentAccount();
     }
-    console.log("removeJwt");
-    return this._setToken(address, "jwt", null);
+    console.log("removeJwt", address);
+    return address && this._setToken(address, "jwt", null);
   }
 };
 var localStorage$1 = typeof window === "undefined" ? {
