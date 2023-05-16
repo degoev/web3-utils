@@ -31092,6 +31092,48 @@ try {
   }
 } catch (error) {}
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"];
+  if (null != _i) {
+    var _s,
+      _e,
+      _x,
+      _r,
+      _arr = [],
+      _n = !0,
+      _d = !1;
+    try {
+      if (_x = (_i = _i.call(arr)).next, 0 === i) {
+        if (Object(_i) !== _i) return;
+        _n = !1;
+      } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) {
+        ;
+      }
+    } catch (err) {
+      _d = !0, _e = err;
+    } finally {
+      try {
+        if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return;
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$1(arr, i) || _nonIterableRest();
+}
+
 function _defineProperty(obj, key, value) {
   key = _toPropertyKey(key);
   if (key in obj) {
@@ -31944,6 +31986,12 @@ var rpcUrlByChains = Object.keys(networkConfigs).map(function (chainId) {
 }).reduce(function (acc, chainId) {
   return _objectSpread$1(_objectSpread$1({}, acc), {}, _defineProperty({}, chainId, networkConfigs[chainId].rpcUrls[0]));
 }, {});
+var providerByChains = Object.fromEntries(Object.entries(rpcUrlByChains).map(function (_ref) {
+  var _ref2 = _slicedToArray(_ref, 2),
+    chainId = _ref2[0],
+    rpcUrl = _ref2[1];
+  return [chainId, new JsonRpcProvider(rpcUrl)];
+}));
 
 var injected = new InjectedConnector({
   supportedChainIds: supportedChains
@@ -36037,7 +36085,8 @@ var web3 = {
     rpcUrlByChains: rpcUrlByChains,
     ChainIds: ChainIds,
     wallets: walletConfigs,
-    networks: networkConfigs
+    networks: networkConfigs,
+    providerByChains: providerByChains
   },
   hooks: {
     useWeb3Auth: useWeb3Auth
@@ -36755,11 +36804,11 @@ var cjs$6 = {};
 
 var cjs$5 = {};
 
-var hasRequiredCjs$a;
+var hasRequiredCjs$9;
 
-function requireCjs$a () {
-	if (hasRequiredCjs$a) return cjs$5;
-	hasRequiredCjs$a = 1;
+function requireCjs$9 () {
+	if (hasRequiredCjs$9) return cjs$5;
+	hasRequiredCjs$9 = 1;
 
 	Object.defineProperty(cjs$5, "__esModule", {
 	  value: true
@@ -36824,17 +36873,17 @@ function requireCjs$a () {
 	return cjs$5;
 }
 
-var hasRequiredCjs$9;
+var hasRequiredCjs$8;
 
-function requireCjs$9 () {
-	if (hasRequiredCjs$9) return cjs$6;
-	hasRequiredCjs$9 = 1;
+function requireCjs$8 () {
+	if (hasRequiredCjs$8) return cjs$6;
+	hasRequiredCjs$8 = 1;
 
 	Object.defineProperty(cjs$6, "__esModule", {
 	  value: true
 	});
 	cjs$6.getWindowMetadata = void 0;
-	var window_getters_1 = requireCjs$a();
+	var window_getters_1 = requireCjs$9();
 	function getWindowMetadata() {
 	  var doc;
 	  var loc;
@@ -37107,8 +37156,8 @@ function requireBrowser$1 () {
 		});
 		exports.getClientMeta = exports.getLocalStorage = exports.getLocalStorageOrThrow = exports.getCrypto = exports.getCryptoOrThrow = exports.getLocation = exports.getLocationOrThrow = exports.getNavigator = exports.getNavigatorOrThrow = exports.getDocument = exports.getDocumentOrThrow = exports.getFromWindowOrThrow = exports.getFromWindow = exports.isBrowser = exports.isNode = exports.isMobile = exports.isIOS = exports.isAndroid = exports.detectOS = exports.detectEnv = void 0;
 		var tslib_1 = require$$7;
-		var windowMetadata = tslib_1.__importStar(requireCjs$9());
-		var windowGetters = tslib_1.__importStar(requireCjs$a());
+		var windowMetadata = tslib_1.__importStar(requireCjs$8());
+		var windowGetters = tslib_1.__importStar(requireCjs$9());
 		var detect_browser_1 = require$$3$1;
 		function detectEnv(userAgent) {
 		  return (0, detect_browser_1.detect)(userAgent);
@@ -37342,11 +37391,11 @@ function requireRegistry () {
 	return registry;
 }
 
-var hasRequiredCjs$8;
+var hasRequiredCjs$7;
 
-function requireCjs$8 () {
-	if (hasRequiredCjs$8) return cjs$7;
-	hasRequiredCjs$8 = 1;
+function requireCjs$7 () {
+	if (hasRequiredCjs$7) return cjs$7;
+	hasRequiredCjs$7 = 1;
 	(function (exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -41413,26 +41462,17 @@ function requireEnv$1 () {
 	return env$1;
 }
 
-var hasRequiredCjs$7;
+(function (exports) {
 
-function requireCjs$7 () {
-	if (hasRequiredCjs$7) return cjs$4;
-	hasRequiredCjs$7 = 1;
-	(function (exports) {
-
-		Object.defineProperty(exports, "__esModule", {
-		  value: true
-		});
-		var tslib_1 = require$$0$3;
-		tslib_1.__exportStar(requireCrypto(), exports);
-		tslib_1.__exportStar(requireEnv$1(), exports);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var tslib_1 = require$$0$3;
+	tslib_1.__exportStar(requireCrypto(), exports);
+	tslib_1.__exportStar(requireEnv$1(), exports);
 } (cjs$4));
-	return cjs$4;
-}
 
-var cjsExports = requireCjs$7();
-
-var isNodeJs = cjsExports.isNode;
+var isNodeJs = cjs$4.isNode;
 
 function payloadId() {
   var date = Date.now() * Math.pow(10, 3);
@@ -42615,7 +42655,7 @@ function requireCjs$6 () {
 		  value: true
 		});
 		var tslib_1 = require$$7;
-		tslib_1.__exportStar(requireCjs$8(), exports);
+		tslib_1.__exportStar(requireCjs$7(), exports);
 		tslib_1.__exportStar(requireConstants$4(), exports);
 		tslib_1.__exportStar(requireEncoding$1(), exports);
 		tslib_1.__exportStar(requireEthereum(), exports);
@@ -49405,7 +49445,7 @@ function requireEnv () {
 		  value: true
 		});
 		var tslib_1 = require$$0$2;
-		tslib_1.__exportStar(requireCjs$7(), exports);
+		tslib_1.__exportStar(cjs$4, exports);
 } (env));
 	return env;
 }
@@ -56375,7 +56415,7 @@ function requireCjs$1 () {
 	function _interopDefault(ex) {
 	  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
 	}
-	var browserUtils = requireCjs$8();
+	var browserUtils = requireCjs$7();
 	var QRCode = _interopDefault(requireLib$4());
 	var copy = _interopDefault(requireCopyToClipboard());
 	var React = requireCompat();
